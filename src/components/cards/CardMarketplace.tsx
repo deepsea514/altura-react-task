@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import { CombinedState } from '../../redux/store';
 import MoralisAPI from '../../helper/moralis_api';
 import { NFTDetailParsed, NFTResponse } from '../../types';
 import axios from 'axios';
@@ -19,13 +17,10 @@ function CardMarketplace() {
   const [nfts, setNFTs] = useState<NFTDetailParsed[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { account } = useSelector((state: CombinedState) => state.blockchain);
-
   useEffect(() => {
-    if (account == null) return;
     setLoading(true);
     setNFTs([])
-    MoralisAPI.get<NFTResponse>(`/${'0xd8da6bf26964af9d7eed9e03e53415d37aa96045'}/nft`, {
+    MoralisAPI.get<NFTResponse>(`/0xd8da6bf26964af9d7eed9e03e53415d37aa96045/nft`, {
       params: {
         chain: "eth",
         format: "decimal"
@@ -54,7 +49,7 @@ function CardMarketplace() {
       setLoading(false);
     })
 
-  }, [account])
+  }, [])
 
   const getImage = (nft: NFTDetailParsed) => {
     if (!nft.image) return (<img src="/item_unknown.png" alt="nftimage" />);
