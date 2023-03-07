@@ -37,8 +37,6 @@ function CardMarketplace() {
             try {
               const { data } = await axios.get(obj.token_uri);
               obj.image = data.image;
-              console.log(data)
-
             } catch (error) { }
           }
           return obj;
